@@ -115,6 +115,8 @@ for comment in comments:
     score = evaluate(joined)
     label = splited[3]
 #기준치 : 0.4
+    if score == 0:
+        score = 0.5
     if score >= 0.4:
         score1 = "P"
     else:
