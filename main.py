@@ -37,18 +37,21 @@ def combi3(t):
     return []
 
 
-def coun(t):  # 정렬된 어절들에서 유일한 어절과 그 어절에 대한 빈도수 셈하기 함수
-    t.sort()
-    b = []
-    n = len(t)
-    st = 0
+def get_word_count_pair_list(word_list: list):
+    '''
+    명사 리스트를 (명사, 빈도수) 리스트로 변환
+    get_word_count_pair_list(['apple', 'apple']) == [('apple', 2)] 
+    '''
+    word_list = sorted(word_list)
+    result = []
+    start = 0
     end = 0
-    while st < n:
-        while end < n and t[st] == t[end]:
+    while start < len(word_list):
+        while end < len(word_list) and word_list[start] == word_list[end]:
             end = end + 1
-        b.append((t[st], end-st))
-        st = end
-    return b
+        result.append((word_list[start], end - start))
+        start = end
+    return result
 
 
 def evaluate(comment):
@@ -56,7 +59,7 @@ def evaluate(comment):
     noun_list = []
     for i in range(len(word_list)):
         if word_list[i] in noun:
-          noun_list.append(word_list[i])
+            noun_list.append(word_list[i])
         elif combi2(word_list[i]) != []:
             t = combi2(word_list[i])
             for j in range(len(t)):
@@ -65,7 +68,7 @@ def evaluate(comment):
             t = combi3(word_list[i])
             for j in range(len(t)):
                 noun_list.append(t[j])
-    c = coun(noun_list)
+    c = get_word_count_pair_list(noun_list)
     print(c)
     num_words = 0
     sum_of_product = 0
@@ -124,5 +127,5 @@ for comment in comments:
         print(comment)
         print(splited[0] + ": incorrect")
 
-#정확도 출력
+# 정확도 출력
 print('정확도:', matched/len(comments))
