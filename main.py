@@ -83,19 +83,19 @@ def evaluate(comment):
 
 
 
-nounf = open('noun.txt', 'r')
+nounf = open('noun.txt', 'r', encoding='utf-8')
 nounl = nounf.readlines()
 noun = []
 for i in range(len(nounl)):
     noun.append(nounl[i].strip('.\n'))
     
-postpf = open('postPosition.txt', 'r')
+postpf = open('postPosition.txt', 'r', encoding='utf-8')
 postpl = postpf.readlines()
 postp = []
 for i in range(len(postpl)):
     postp.append(postpl[i].strip('.\n'))
     
-hadayf = open('joyolist.txt', 'r')
+hadayf = open('joyolist.txt', 'r', encoding='utf-8')
 hadayl = hadayf.readlines()
 haday = []
 for i in range(len(hadayl)):
@@ -113,7 +113,7 @@ for comment in comments:
     score = evaluate(joined)
     label = splited[3]
 #기준치 : 0.5
-    if score >= 0.4:
+    if score >= 0.5:
         score = "P"
     else:
         score = "N"
