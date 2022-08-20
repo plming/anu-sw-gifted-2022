@@ -1,16 +1,16 @@
-nounf = open('noun.txt', 'r')
+nounf = open('noun.txt', 'r',encoding='utf-8')
 nounl = nounf.readlines()
 noun = []
 for i in range(len(nounl)):
     noun.append(nounl[i].strip('.\n'))
 
-postpf = open('postPosition.txt', 'r')
+postpf = open('postPosition.txt', 'r',encoding='utf-8')
 postpl = postpf.readlines()
 postp = []
 for i in range(len(postpl)):
     postp.append(postpl[i].strip('.\n'))
     
-hadayf = open('joyolist.txt', 'r')
+hadayf = open('joyolist.txt', 'r',encoding='utf-8')
 hadayl = hadayf.readlines()
 haday = []
 for i in range(len(hadayl)):
@@ -47,7 +47,7 @@ def coun(a):
         st = end
     return b
 
-f = open('newss.csv', 'r', )
+f = open('news.csv', 'r',encoding='utf-8')
 a = f.readlines()
 n = len(a)
 b = []
@@ -71,55 +71,3 @@ for i in range(len(b)):
 h.sort()
 c1 = coun(h)
 print(c1)
-
-'''f = open('input2.txt', 'r', encoding='utf-8')
-a = f.readlines()
-n = len(a)
-b = []
-
-for i in range(n):
-    t = a[i].strip('.\n')
-    b = b + t.split()
-print(b)
-e = []
-
-for i in range(len(b)):
-    if b[i] in noun:
-        e.append(b[i])
-    elif combi2(b[i]) != []:
-         t = combi2(b[i])
-         for j in range(len(t)):
-             e.append(t[j])
-    elif combi3(b[i]) != []:
-        t = combi3(b[i])
-        for j in range(len(t)):
-            e.append(t[j])
-            
-e.sort()
-c2 = coun(e)
-print(c2)
-
-s=0
-cp1=0
-cp2=0
-
-while True :
-    
-    if (c1[cp1][0] > c2[cp2][0]) :
-        s=s+(c2[cp2][1])**2
-        if cp2 <len(c2)-1 :
-            cp2=cp2+1
-    elif (c1[cp1][0]<c2[cp2][0]) :
-        s=s+(c1[cp1][1])**2
-        if cp1 <len(c1)-1 :
-            cp1=cp1+1
-    elif (c1[cp1][0]==c2[cp2][0]) :
-        s=s+ (c1[cp1][1]-c2[cp2][1])**2
-        if cp1 <len(c1)-1 :
-            cp1=cp1+1
-        if cp2 <len(c2)-1 :
-            cp2=cp2+1
-    if (cp1==len(c1)-1 and cp2==len(c2)-1) :
-         break
-
-print(s)'''
