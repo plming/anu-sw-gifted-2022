@@ -38,6 +38,7 @@ def combi3(t):
 
 
 def coun(t):  # 정렬된 어절들에서 유일한 어절과 그 어절에 대한 빈도수 셈하기 함수
+    t.sort()
     b = []
     n = len(t)
     st = 0
@@ -111,7 +112,7 @@ for comment in comments:
     score = evaluate(joined)
     label = splited[3]
 #기준치 : 0.5
-    if score >= 0.5:
+    if score >= 0.1:
         score = "P"
     else:
         score = "N"
@@ -120,6 +121,7 @@ for comment in comments:
         print(splited[0] + ": correct")
         matched = matched + 1
     else:
+        print(comment)
         print(splited[0] + ": incorrect")
 
 #정확도 출력
