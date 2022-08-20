@@ -114,17 +114,17 @@ for comment in comments:
     joined = " ".join(splited[3:])
     score = evaluate(joined)
     label = splited[3]
-#기준치 : 0.5
+#기준치 : 0.4
     if score >= 0.4:
         score = "P"
     else:
         score = "N"
 
     if label == score:
-        print(splited[0] + ": correct")
+        print(splited[0] + ": correct", score)
         matched = matched + 1
     else:
-        print(splited[0] + ": incorrect")
+        print(splited[0] + ": incorrect", score)
         print(comment)
         
 # 정확도 출력
