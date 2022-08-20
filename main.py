@@ -107,7 +107,7 @@ file = open('news.csv', 'r', encoding='utf-8')
 comments = file.readlines()
 
 polar_scores = load_polar_scores()
-
+count = 0
 matched = 0
 for comment in comments:
     splited = comment.split(',')
@@ -116,13 +116,14 @@ for comment in comments:
     label = splited[3]
 #기준치 : 0.4
     if score == 0:
-        score = 0.5
+        count = count + 1
+
     if score >= 0.4:
         score1 = "P"
     else:
         score1 = "N"
 
-    if label == score1:
+    if label == score1 and score != 0:
         print(splited[0] + ": correct", score)
         matched = matched + 1
     else:
@@ -130,4 +131,6 @@ for comment in comments:
         print(comment)
         
 # 정확도 출력
-print('정확도:', matched/len(comments))
+print('정확도:', matched/(len(comments)-42))
+print(count)
+print(len(comments))
