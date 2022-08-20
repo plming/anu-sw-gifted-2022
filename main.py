@@ -116,11 +116,11 @@ for comment in comments:
     label = splited[3]
 #기준치 : 0.4
     if score >= 0.4:
-        score = "P"
+        score1 = "P"
     else:
-        score = "N"
+        score1 = "N"
 
-    if label == score:
+    if label == score1:
         print(splited[0] + ": correct", score)
         matched = matched + 1
     else:
