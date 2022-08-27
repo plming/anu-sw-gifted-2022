@@ -123,7 +123,7 @@ for comment in comments:
     else:
         score1 = "N"
 
-    if label == score1 and score != 0:
+    if label == score1:
         print(splited[0] + ": correct", score)
         matched = matched + 1
     else:
@@ -131,6 +131,6 @@ for comment in comments:
         print(comment)
         
 # 정확도 출력
-print('정확도:', matched/(len(comments)-42))
+print('정확도:', matched/(len(comments)))
 print(count)
 print(len(comments))
