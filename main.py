@@ -69,12 +69,14 @@ def evaluate(comment):
                 noun_list.append(t[j])
     c = get_word_count_pair_list(noun_list)
     print(c)
+    print(type(c[0]))
+    print(c[0][0])
     try:
         for i in range(len(c)):
-            if polar_scores[c[i][slice(0)]] != 0:
-                print(c[i][0], polar_scores[c[i][slice(0)]])
+                if polar_scores[c[i][0]] != 0:
+                    print(c[i][0], polar_scores[c[i][slice(0)]])
     except KeyError:
-        print(-1)
+        print('Not Found')
     num_words = 0
     sum_of_product = 0
     for i in range(len(c)):
