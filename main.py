@@ -75,14 +75,12 @@ def evaluate(comment):
                 noun_list.append(t[j])
     c = get_word_count_pair_list(noun_list)
     print(c)
-    dictcount = 0
     try:
         for i in range(len(c)):
-            if polar_scores[c[i][0]] == 1 or 2 or 3 or 4 or 5:
-                dictcount += 1
+            if polar_scores[c[i][0]] != 0:
+                print(c[i][0], polar_scores[c[i][0]])
     except KeyError:
-        pass
-    print(dictcount)
+        print(-1)
     num_words = 0
     sum_of_product = 0
     for i in range(len(c)):
@@ -96,7 +94,6 @@ def evaluate(comment):
         return -1
 
     return sum_of_product/num_words
-
 
 nounf = open('noun.txt', 'r', encoding='utf-8')
 nounl = nounf.readlines()
