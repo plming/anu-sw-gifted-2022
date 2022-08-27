@@ -1,7 +1,8 @@
-# Import the itertools libarary 
+# Import the itertools, time libarary
 # This library ships with Python 3 so you don't have to download anything
-# It provides a bunch of tools for dealing with sequences and iteration
 import itertools
+import time
+
 
 def load_polar_scores() -> dict:
     polar_scores = {}
@@ -34,13 +35,6 @@ def combi3(t):
                 return [t[0:i], t[i:j]]
     return []
 
-def combi4(t):
-    n = len(t)
-    for i in range(1, n):
-        for j in range(i+1, n):
-            for k in range(i+2, n):
-                if (t[0:i] in noun and t[i:j] in noun and t[j:k] in haday and t[k:n] == '!' or '?' or '.'):
-                    return [t[0:i], t[i:j]]
 
 def get_word_count_pair_list(word_list: list):
     '''
@@ -77,8 +71,8 @@ def evaluate(comment):
     print(c)
     try:
         for i in range(len(c)):
-            if polar_scores[c[i][0]] != 0:
-                print(c[i][0], polar_scores[c[i][0]])
+            if polar_scores[c[i][slice(0)]] != 0:
+                print(c[i][0], polar_scores[c[i][slice(0)]])
     except KeyError:
         print(-1)
     num_words = 0
@@ -94,6 +88,7 @@ def evaluate(comment):
         return -1
 
     return sum_of_product/num_words
+
 
 nounf = open('noun.txt', 'r', encoding='utf-8')
 nounl = nounf.readlines()
@@ -119,6 +114,8 @@ comments = file.readlines()
 polar_scores = load_polar_scores()
 count = 0
 matched = 0
+print('추출된 단어, 극성단어 갯수, 결과(점수), 댓글')
+time.sleep(1.5)
 for comment in comments:
     splited = comment.split(',')
     joined = " ".join(splited[3:])
@@ -147,9 +144,8 @@ print(count)
 print(len(comments))
 
 
-
 # Create a sliced dictionary
 # dict() is used to convert the iterable result of itertools.islice() to a new dictionary
 #slicedDict = dict(itertools.islice(myDictionary.items(), 1 ,3))
 
-#print(slicedDict)
+# print(slicedDict)

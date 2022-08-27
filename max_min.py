@@ -94,7 +94,7 @@ haday = []
 for i in range(len(hadayl)):
     haday.append(hadayl[i].strip('.\n'))
 
-file = open('news_list.csv', 'r', encoding='utf-8')
+file = open('news.csv', 'r', encoding='utf-8')
 comments = file.readlines()
 
 polar_scores = load_polar_scores()
