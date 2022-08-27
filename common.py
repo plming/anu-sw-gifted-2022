@@ -14,7 +14,7 @@ def load_polar_scores():
 def get_word_count_pair_list(word_list: list):
     '''
     명사 리스트를 (명사, 빈도수) 리스트로 변환
-    get_word_count_pair_list(['apple', 'apple']) == [('apple', 2)] 
+    get_word_count_pair_list(['apple', 'apple']) == {'apple': 2} 
     '''
     word_list = sorted(word_list)
     result = {}

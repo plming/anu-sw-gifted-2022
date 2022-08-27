@@ -12,8 +12,8 @@ from common import *
 def get_max_min(comments: list[dict]):
     """
     { "apple": {
-        "max": 1,
-        "min": 2
+        "max": 2,
+        "min": 1
     }
     }
     """
@@ -31,7 +31,7 @@ def get_max_min(comments: list[dict]):
     return result
 
 
-def get_distance(first, second, max_min) -> float:
+def get_distance(first: dict, second: dict, max_min: dict[dict]) -> float:
     sum_term = 0
     for word, value in max_min.items():
         dividend = (first.get(word, 0) - second.get(word, 0))
