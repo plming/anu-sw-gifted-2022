@@ -28,8 +28,6 @@ def combi2(t):
             return [t[0:i], t[i:n]]
         elif (t[0:i] in noun and t[i:n] in postp):
             return [t[0:i]]
-        elif (t[0:i] in noun and t[i:n] == '!' or '?' or '.'):
-            return [t[0:i]]
     return []
 
 
@@ -48,3 +46,6 @@ def combi4(t):
             for k in range(i+2, n):
                 if (t[0:i] in noun and t[i:j] in noun and t[j:k] in haday and t[k:n] == '!' or '?' or '.'):
                     return [t[0:i], t[i:j]]
+    return []
+
+print(coms)
