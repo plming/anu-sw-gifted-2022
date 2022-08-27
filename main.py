@@ -1,4 +1,4 @@
-def load_polar_scores():
+def load_polar_scores() -> dict:
     polar_scores = {}
     file = open('dicty.txt', 'r', encoding='utf-8')
     lines = file.readlines()
@@ -7,13 +7,6 @@ def load_polar_scores():
         polar_scores[key] = int(value)
 
     return polar_scores
-
-
-def get_polar_score(polar_scores, key):
-    if key not in polar_scores:
-        return 0
-    else:
-        return polar_scores[key]
 
 
 def combi2(t):
@@ -36,6 +29,13 @@ def combi3(t):
                 return [t[0:i], t[i:j]]
     return []
 
+def combi4(t):
+    n = len(t)
+    for i in range(1, n):
+        for j in range(i+1, n):
+            for k in range(i+2, n):
+                if (t[0:i] in noun and t[i:j] in noun and t[j:k] in haday and t[k:n] == '!' or '?' or '.'):
+                    return [t[0:i], t[i:j]]
 
 def get_word_count_pair_list(word_list: list):
     '''
@@ -75,7 +75,7 @@ def evaluate(comment):
     for i in range(len(c)):
         word, frequency = c[i]
         num_words += frequency
-        score = get_polar_score(polar_scores, word)
+        score = polar_scores.get(word, 0)
         sum_of_product += score * frequency
 
     if num_words == 0:
@@ -107,7 +107,7 @@ file = open('news.csv', 'r', encoding='utf-8')
 comments = file.readlines()
 
 polar_scores = load_polar_scores()
-
+count = 0
 matched = 0
 for comment in comments:
     splited = comment.split(',')
@@ -115,17 +115,22 @@ for comment in comments:
     score = evaluate(joined)
     label = splited[3]
 #기준치 : 0.4
-    if score >= 0.4:
-        score = "P"
-    else:
-        score = "N"
+    if score == 0:
+        count = count + 1
 
-    if label == score:
+    if score >= 0.4:
+        score1 = "P"
+    else:
+        score1 = "N"
+
+    if label == score1:
         print(splited[0] + ": correct", score)
         matched = matched + 1
     else:
         print(splited[0] + ": incorrect", score)
         print(comment)
-        
+
 # 정확도 출력
-print('정확도:', matched/len(comments))
+print('정확도:', matched/(len(comments)))
+print(count)
+print(len(comments))
