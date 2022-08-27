@@ -126,6 +126,7 @@ for comment in comments:
     if label == score1:
         print(splited[0] + ": correct", score)
         matched = matched + 1
+        print(comment)
     else:
         print(splited[0] + ": incorrect", score)
         print(comment)
