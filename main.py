@@ -1,3 +1,8 @@
+# Import the itertools libarary 
+# This library ships with Python 3 so you don't have to download anything
+# It provides a bunch of tools for dealing with sequences and iteration
+import itertools
+
 def load_polar_scores() -> dict:
     polar_scores = {}
     file = open('dicty.txt', 'r', encoding='utf-8')
@@ -70,6 +75,14 @@ def evaluate(comment):
                 noun_list.append(t[j])
     c = get_word_count_pair_list(noun_list)
     print(c)
+    dictcount = 0
+    try:
+        for i in range(len(c)):
+            if polar_scores[c[i][0]] == 1 or 2 or 3 or 4 or 5:
+                dictcount += 1
+    except KeyError:
+        pass
+    print(dictcount)
     num_words = 0
     sum_of_product = 0
     for i in range(len(c)):
@@ -135,3 +148,11 @@ for comment in comments:
 print('정확도:', matched/(len(comments)))
 print(count)
 print(len(comments))
+
+
+
+# Create a sliced dictionary
+# dict() is used to convert the iterable result of itertools.islice() to a new dictionary
+#slicedDict = dict(itertools.islice(myDictionary.items(), 1 ,3))
+
+#print(slicedDict)
