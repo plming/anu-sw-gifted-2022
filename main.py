@@ -1,4 +1,4 @@
-def load_polar_scores():
+def load_polar_scores() -> dict:
     polar_scores = {}
     file = open('dicty.txt', 'r', encoding='utf-8')
     lines = file.readlines()
@@ -7,13 +7,6 @@ def load_polar_scores():
         polar_scores[key] = int(value)
 
     return polar_scores
-
-
-def get_polar_score(polar_scores, key):
-    if key not in polar_scores:
-        return 0
-    else:
-        return polar_scores[key]
 
 
 def combi2(t):
@@ -75,7 +68,7 @@ def evaluate(comment):
     for i in range(len(c)):
         word, frequency = c[i]
         num_words += frequency
-        score = get_polar_score(polar_scores, word)
+        score = polar_scores.get(word, 0)
         sum_of_product += score * frequency
 
     if num_words == 0:
@@ -129,7 +122,7 @@ for comment in comments:
     else:
         print(splited[0] + ": incorrect", score)
         print(comment)
-        
+
 # 정확도 출력
 print('정확도:', matched/(len(comments)-42))
 print(count)
