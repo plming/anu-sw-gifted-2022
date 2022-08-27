@@ -29,6 +29,13 @@ def combi3(t):
                 return [t[0:i], t[i:j]]
     return []
 
+def combi4(t):
+    n = len(t)
+    for i in range(1, n):
+        for j in range(i+1, n):
+            for k in range(i+2, n):
+                if (t[0:i] in noun and t[i:j] in noun and t[j:k] in haday and t[k:n] == '!' or '?' or '.'):
+                    return [t[0:i], t[i:j]]
 
 def get_word_count_pair_list(word_list: list):
     '''
