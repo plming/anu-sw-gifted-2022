@@ -75,7 +75,7 @@ def evaluate(comment):
         try:
             print(c[i][0], polar_scores[c[i][slice(0)]])
         except KeyError:
-            print('Not Found')
+            pass
     num_words = 0
     sum_of_product = 0
     for i in range(len(c)):
