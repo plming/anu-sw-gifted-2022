@@ -1,5 +1,3 @@
-
-
 def load_polar_scores() -> dict[str, int]:
     """
     극성점수 불러오기
@@ -15,11 +13,11 @@ def load_polar_scores() -> dict[str, int]:
     return polar_scores
 
 
-def get_word_count_pair_list(word_list: list):
-    '''
+def get_word_count_pair_list(word_list: list) -> dict[str, int]:
+    """
     명사 리스트를 (명사, 빈도수) 리스트로 변환
     get_word_count_pair_list(['apple', 'apple']) == {'apple': 2} 
-    '''
+    """
     word_list = sorted(word_list)
     result = {}
     start = 0
@@ -53,39 +51,48 @@ def combi3(word):
     return []
 
 
-def get_nouns():
-    nounf = open('noun.txt', 'r', encoding='utf-8')
-    nounl = nounf.readlines()
-    noun = []
-    for i in range(len(nounl)):
-        noun.append(nounl[i].strip('.\n'))
+def load_nouns() -> set[str]:
+    """
+    명사 집합 불러오기
+    """
+    noun = set[str]()
+    with open('noun.txt', 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+        for line in lines:
+            noun.add(line.strip('.\n'))
     return noun
 
 
-def get_postpositions():
-    postpf = open('postPosition.txt', 'r', encoding='utf-8')
-    postpl = postpf.readlines()
-    postpositions = []
-    for i in range(len(postpl)):
-        postpositions.append(postpl[i].strip('.\n'))
+def load_postpositions() -> set[str]:
+    """
+    조사 집합 불러오기
+    """
+    postpositions = set[str]()
+    with open('postPosition.txt', 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+        for line in lines:
+            postpositions.add(line.strip('.\n'))
     return postpositions
 
 
-def get_haday():
-    hadayf = open('joyolist.txt', 'r', encoding='utf-8')
-    hadayl = hadayf.readlines()
-    haday = []
-    for i in range(len(hadayl)):
-        haday.append(hadayl[i].strip('.\n'))
+def load_haday() -> set[str]:
+    """
+    하다 용언 집합 불러오기
+    """
+    haday = set[str]()
+    with open('joyolist.txt', 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+        for line in lines:
+            haday.add(line.strip('.\n'))
     return haday
 
 
 def get_comments() -> list[dict]:
     result = []
 
-    nouns = get_nouns()
+    nouns = load_nouns()
 
-    file = open('news_list.csv', 'r', encoding='utf-8')
+    file = open('news.csv', 'r', encoding='utf-8')
     comments = file.readlines()
     for comment in comments:
         word_list = comment.split(' ')
@@ -112,6 +119,6 @@ def get_comments() -> list[dict]:
 
 
 # global variables
-nouns = get_nouns()
-haday = get_haday()
-postpositions = get_postpositions()
+nouns = load_nouns()
+haday = load_haday()
+postpositions = load_postpositions()
