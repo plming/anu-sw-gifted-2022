@@ -1,21 +1,5 @@
 from math import sqrt
-
-def load_polar_scores():
-    polar_scores = {}
-    file = open('dicty.txt', 'r', encoding='utf-8')
-    lines = file.readlines()
-    for line in lines:
-        key, value = line.strip('.\n').split(',')
-        polar_scores[key] = int(value)
-
-    return polar_scores
-
-
-def get_polar_score(polar_scores, key):
-    if key not in polar_scores:
-        return 0
-    else:
-        return polar_scores[key]
+import common
 
 
 def combi2(t):
@@ -74,41 +58,45 @@ def get_nounlist(comment):
 
     return c
 
+
 def get_maxmin(nounlist):
-    word_group =[]
-    if len(word_group)==0 :
-        for word in nounlist :
-            word_group.append([word[0],word[1],word[1]])
-    else :
-        for i in range (0,len(nounlist)):
+    word_group = []
+    if len(word_group) == 0:
+        for word in nounlist:
+            word_group.append([word[0], word[1], word[1]])
+    else:
+        for i in range(0, len(nounlist)):
             n_count = 0
-            for j in range (0, len(word_group)) :
-                if nounlist[i][0]==word_group[j][0] :
-                    if nounlist[i][1] > word_group[j][1] :
-                        word_group[j][1]=nounlist[i][1]
-                    if nounlist[i][1] < word_group[j][2] :
-                        word_group[j][2]=nounlist[i][1]
-                else :
+            for j in range(0, len(word_group)):
+                if nounlist[i][0] == word_group[j][0]:
+                    if nounlist[i][1] > word_group[j][1]:
+                        word_group[j][1] = nounlist[i][1]
+                    if nounlist[i][1] < word_group[j][2]:
+                        word_group[j][2] = nounlist[i][1]
+                else:
                     n_count = n_count + 1
-                    
-            if n_count == len(word_group) :
-                word_group.append([nounlist[i][0],nounlist[i][1],nounlist[i][1]])
+
+            if n_count == len(word_group):
+                word_group.append(
+                    [nounlist[i][0], nounlist[i][1], nounlist[i][1]])
                 n_count = 0
 
     return word_group
 
+
 def get_distance(new_num, noun_num, max_min) -> float:
 
     sum_term = 0
-    for word,value1,value2 in max_min:
+    for word, value1, value2 in max_min:
         dividend = (new_nounlist[new_num][1] - nounlist[noun_num][1])
-        dividend =1 if dividend == 0 else dividend
+        dividend = 1 if dividend == 0 else dividend
 
         divisor = value1 - value2
         divisor = 1 if divisor == 0 else divisor
 
-        sum_term += (dividend/divisor) ** 2        
+        sum_term += (dividend/divisor) ** 2
     return sqrt(sum_term)
+
 
 nounf = open('noun.txt', 'r', encoding='utf-8')
 nounl = nounf.readlines()
@@ -131,38 +119,37 @@ for i in range(len(hadayl)):
 file = open('news.csv', 'r', encoding='utf-8')
 comments = file.readlines()
 
-polar_scores = load_polar_scores()
+polar_scores = common.load_polar_scores()
 
 
-new_comment=input("댓글을 입력하세요: ")
-new_nounlist=get_nounlist(new_comment)
+new_comment = input("댓글을 입력하세요: ")
+new_nounlist = get_nounlist(new_comment)
 
-top3=[]
+top3 = []
 
 count = 0
 for comment in comments:
     splited = comment.split(',')
     joined = " ".join(splited[3:])
     nounlist = get_nounlist(joined)
-    max_min=get_maxmin(nounlist)
+    max_min = get_maxmin(nounlist)
     for i in range(len(nounlist)):
         for j in range(len(new_nounlist)):
-            if new_nounlist[j][0]==nounlist[i][0] :
-                distance = get_distance(j,i,max_min)
-                top3.append([distance,count])
+            if new_nounlist[j][0] == nounlist[i][0]:
+                distance = get_distance(j, i, max_min)
+                top3.append([distance, count])
     count = count + 1
-    
+
 top3.sort(reverse=True)
 print(top3)
 
-P=0
-for i in range (0,3):
-    splited_top3=comments[top3[i][1]].split(',')
-    if splited_top3[3] == "P" :
+P = 0
+for i in range(0, 3):
+    splited_top3 = comments[top3[i][1]].split(',')
+    if splited_top3[3] == "P":
         P = P + 1
-        
-if P >=2 :
+
+if P >= 2:
     print("긍정적인 댓글입니다.")
-else :
+else:
     print("부정적인 댓글입니다.")
-                                      

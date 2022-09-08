@@ -1,12 +1,16 @@
 
 
-def load_polar_scores():
+def load_polar_scores() -> dict[str, int]:
+    """
+    극성점수 불러오기
+    ex. { '의기': 4, '영웅': 5, ...}
+    """
     polar_scores = {}
     file = open('dicty.txt', 'r', encoding='utf-8')
     lines = file.readlines()
     for line in lines:
-        key, value = line.strip('.\n').split(',')
-        polar_scores[key] = int(value)
+        word, score = line.strip('.\n').split(',')
+        polar_scores[word] = int(score)
 
     return polar_scores
 
