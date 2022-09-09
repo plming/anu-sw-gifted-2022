@@ -1,26 +1,6 @@
 from math import sqrt
+from time import time
 import common
-
-
-def combi2(t):
-    n = len(t)
-    for i in range(n-1, 0, -1):
-        if (t[0:i] in noun and t[i:n] in haday):
-            return [t[0:i]]
-        elif (t[0:i] in noun and t[i:n] in noun):
-            return [t[0:i], t[i:n]]
-        elif (t[0:i] in noun and t[i:n] in postp):
-            return [t[0:i]]
-    return []
-
-
-def combi3(t):
-    n = len(t)
-    for i in range(1, n):
-        for j in range(i+1, n):
-            if (t[0:i] in noun and t[i:j] in noun and t[j:n] in postp):
-                return [t[0:i], t[i:j]]
-    return []
 
 
 def get_word_count_pair_list(word_list: list):
@@ -46,16 +26,16 @@ def get_nounlist(comment):
     for i in range(len(word_list)):
         if word_list[i] in noun:
             noun_list.append(word_list[i])
-        elif combi2(word_list[i]) != []:
-            t = combi2(word_list[i])
+        elif common.combi2(word_list[i]) != []:
+            t = common.combi2(word_list[i])
             for j in range(len(t)):
                 noun_list.append(t[j])
-        elif combi3(word_list[i]) != []:
-            t = combi3(word_list[i])
+        elif common.combi3(word_list[i]) != []:
+            t = common.combi3(word_list[i])
             for j in range(len(t)):
                 noun_list.append(t[j])
-        c = get_word_count_pair_list(noun_list)
-
+    
+    c = get_word_count_pair_list(noun_list)
     return c
 
 
@@ -85,7 +65,6 @@ def get_maxmin(nounlist):
 
 
 def get_distance(new_num, noun_num, max_min) -> float:
-
     sum_term = 0
     for word, value1, value2 in max_min:
         dividend = (new_nounlist[new_num][1] - nounlist[noun_num][1])
@@ -98,31 +77,19 @@ def get_distance(new_num, noun_num, max_min) -> float:
     return sqrt(sum_term)
 
 
-nounf = open('noun.txt', 'r', encoding='utf-8')
-nounl = nounf.readlines()
-noun = []
-for i in range(len(nounl)):
-    noun.append(nounl[i].strip('.\n'))
+noun = common.load_nouns()
+postp = common.load_postpositions()
+haday = common.load_haday()
 
-postpf = open('postPosition.txt', 'r', encoding='utf-8')
-postpl = postpf.readlines()
-postp = []
-for i in range(len(postpl)):
-    postp.append(postpl[i].strip('.\n'))
-
-hadayf = open('joyolist.txt', 'r', encoding='utf-8')
-hadayl = hadayf.readlines()
-haday = []
-for i in range(len(hadayl)):
-    haday.append(hadayl[i].strip('.\n'))
 
 file = open('news.csv', 'r', encoding='utf-8')
 comments = file.readlines()
 
-polar_scores = common.load_polar_scores()
-
 
 new_comment = input("댓글을 입력하세요: ")
+
+start = time()
+
 new_nounlist = get_nounlist(new_comment)
 
 top3 = []
@@ -153,3 +120,6 @@ if P >= 2:
     print("긍정적인 댓글입니다.")
 else:
     print("부정적인 댓글입니다.")
+
+
+print(f"소요시간: {time() - start}")
