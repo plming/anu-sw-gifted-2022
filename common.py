@@ -4,11 +4,11 @@ def load_polar_scores() -> dict[str, int]:
     ex. { '의기': 4, '영웅': 5, ...}
     """
     polar_scores = {}
-    file = open('dicty.txt', 'r', encoding='utf-8')
-    lines = file.readlines()
-    for line in lines:
-        word, score = line.strip('.\n').split(',')
-        polar_scores[word] = int(score)
+    with open('dicty.txt', 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+        for line in lines:
+            word, score = line.strip('.\n').split(',')
+            polar_scores[word] = int(score)
 
     return polar_scores
 
@@ -16,7 +16,7 @@ def load_polar_scores() -> dict[str, int]:
 def get_word_count_pair_list(word_list: list) -> dict[str, int]:
     """
     명사 리스트를 (명사, 빈도수) 리스트로 변환
-    get_word_count_pair_list(['apple', 'apple']) == {'apple': 2} 
+    ex. get_word_count_pair_list(['apple', 'apple']) == {'apple': 2} 
     """
     word_list = sorted(word_list)
     result = {}
@@ -30,24 +30,34 @@ def get_word_count_pair_list(word_list: list) -> dict[str, int]:
     return result
 
 
-def combi2(word):
-    n = len(word)
-    for i in range(n-1, 0, -1):
-        if (word[0:i] in nouns and word[i:n] in haday):
-            return [word[0:i]]
-        elif (word[0:i] in nouns and word[i:n] in nouns):
-            return [word[0:i], word[i:n]]
-        elif (word[0:i] in nouns and word[i:n] in postpositions):
-            return [word[0:i]]
+def combi2(word: str) -> list[str]:
+    """
+    * 어절을 2개의 요소(명사+하다용언, 명사+명사, 명사+조사)로 분리하여 명사 추출
+    * 분리가 가능한 경우, 명사들을 리스트에 담아 반환
+    * 분리가 안되는 경우, 빈 리스트 반환
+    """
+    for i in range(len(word)-1, 0, -1):
+        front, rear = word[:i], word[i:]
+        if front in nouns and rear in haday:
+            return [front]
+        elif front in nouns and rear in nouns:
+            return [front, rear]
+        elif front in nouns and rear in postpositions:
+            return [front]
     return []
 
 
-def combi3(word):
-    n = len(word)
-    for i in range(1, n):
-        for j in range(i+1, n):
-            if (word[0:i] in nouns and word[i:j] in nouns and word[j:n] in postpositions):
-                return [word[0:i], word[i:j]]
+def combi3(word: str) -> list[str]:
+    """
+    * 어절을 3개의 요소(명사+명사+조사)로 분리하여 명사 추출
+    * 분리가 가능한 경우, 명사들을 리스트에 담아 반환
+    * 분리가 안되는 경우, 빈 리스트 반환
+    """
+    for i in range(1, len(word)):
+        for j in range(i+1, len(word)):
+            front, mid, rear = word[:i], word[i:j], word[j:]
+            if front in nouns and mid in nouns and rear in postpositions:
+                return [front, mid]
     return []
 
 
@@ -87,29 +97,30 @@ def load_haday() -> set[str]:
     return haday
 
 
-def get_comments() -> list[dict]:
+def get_comments() -> list[dict[str, int]]:
+    with open('news.csv', 'r', encoding='utf-8') as file:
+        comments = file.readlines()
+
     result = []
-
     nouns = load_nouns()
-
-    file = open('news.csv', 'r', encoding='utf-8')
-    comments = file.readlines()
     for comment in comments:
+        # 댓글을 어절로 분리
         word_list = comment.split(' ')
 
-        # 댓글에서 명사 분리
+        # 어절에서 명사 분리
         noun_list = []
-        for i in range(len(word_list)):
-            if word_list[i] in nouns:
-                noun_list.append(word_list[i])
-            elif combi2(word_list[i]) != []:
-                t = combi2(word_list[i])
-                for j in range(len(t)):
-                    noun_list.append(t[j])
-            elif combi3(word_list[i]) != []:
-                t = combi3(word_list[i])
-                for j in range(len(t)):
-                    noun_list.append(t[j])
+        for word in word_list:
+            if word in nouns:
+                noun_list.append(word)
+                continue
+
+            ret = combi2(word)
+            if len(ret) != 0:
+                noun_list += ret
+                continue
+
+            ret = combi3(word)
+            noun_list += ret
 
         # 댓글을 {단어: 빈도수}로 만들기
         parsed = get_word_count_pair_list(noun_list)
