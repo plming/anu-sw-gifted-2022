@@ -3,7 +3,7 @@ def load_polar_scores() -> dict[str, int]:
     극성점수 불러오기
     ex. { '의기': 4, '영웅': 5, ...}
     """
-    polar_scores = {}
+    polar_scores = dict[str, int]()
     with open('dicty.txt', 'r', encoding='utf-8') as file:
         lines = file.readlines()
         for line in lines:
@@ -13,13 +13,13 @@ def load_polar_scores() -> dict[str, int]:
     return polar_scores
 
 
-def get_word_count_pair_list(word_list: list) -> dict[str, int]:
+def get_word_count_pair_list(word_list: list[str]) -> dict[str, int]:
     """
     명사 리스트를 (명사, 빈도수) 리스트로 변환
     ex. get_word_count_pair_list(['apple', 'apple']) == {'apple': 2} 
     """
     word_list = sorted(word_list)
-    result = {}
+    result = dict[str, int]()
     start = 0
     end = 0
     while start < len(word_list):
@@ -101,14 +101,14 @@ def get_comments() -> list[dict[str, int]]:
     with open('news.csv', 'r', encoding='utf-8') as file:
         comments = file.readlines()
 
-    result = []
+    result = list[dict[str, int]]()
     nouns = load_nouns()
     for comment in comments:
         # 댓글을 어절로 분리
         word_list = comment.split(' ')
 
         # 어절에서 명사 분리
-        noun_list = []
+        noun_list = list[str]()
         for word in word_list:
             if word in nouns:
                 noun_list.append(word)
