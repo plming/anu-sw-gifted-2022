@@ -34,13 +34,15 @@ def get_nounlist(comment):
             t = common.combi3(word_list[i])
             for j in range(len(t)):
                 noun_list.append(t[j])
-    
+
     c = get_word_count_pair_list(noun_list)
     return c
 
 
 def get_maxmin(nounlist):
     word_group = []
+
+    # FIXME: word_group은 지역변수이므로 get_maxmin 호출시마다 새로 생성되고, 따라서 이 식은 항상 참
     if len(word_group) == 0:
         for word in nounlist:
             word_group.append([word[0], word[1], word[1]])
@@ -66,6 +68,8 @@ def get_maxmin(nounlist):
 
 def get_distance(new_num, noun_num, max_min) -> float:
     sum_term = 0
+
+    # FIXME: list unpack시 value1, 2가 아닌 의미 있는 변수명(ex. max_count, min_count) 사용하기
     for word, value1, value2 in max_min:
         dividend = (new_nounlist[new_num][1] - nounlist[noun_num][1])
         dividend = 1 if dividend == 0 else dividend
@@ -94,12 +98,16 @@ new_nounlist = get_nounlist(new_comment)
 
 top3 = []
 
+
 count = 0
 for comment in comments:
     splited = comment.split(',')
     joined = " ".join(splited[3:])
     nounlist = get_nounlist(joined)
+
+    # FIXME: 댓글 하나(comment)만 보고 전체 댓글을 통해 도출될 max-min 값을 찾을수 없음
     max_min = get_maxmin(nounlist)
+
     for i in range(len(nounlist)):
         for j in range(len(new_nounlist)):
             if new_nounlist[j][0] == nounlist[i][0]:
@@ -107,9 +115,13 @@ for comment in comments:
                 top3.append([distance, count])
     count = count + 1
 
+# FIXME: list간의 비교는 첫째 원소 비교, 같으면 둘째 원소 비교 순으로 이어짐
+# 또한 list.sort의 기본 동작은 오름차순이므로 최단거리를 찾으려면 reverse 옵션이 필요없음
 top3.sort(reverse=True)
 print(top3)
 
+# FIXME: 관례적으로 변수명에서 ALL_CAPS(대문자)는 주로 변수가 아닌 상수에 사용함.
+# 파이썬에서는 일반적인 변수에 대해 num_positive_comments와 같이 snake_case를 권장
 P = 0
 for i in range(0, 3):
     splited_top3 = comments[top3[i][1]].split(',')
