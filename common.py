@@ -13,9 +13,9 @@ def load_polar_scores() -> dict[str, int]:
     return polar_scores
 
 
-def get_word_count_pair_list(word_list: list[str]) -> dict[str, int]:
+def get_word_count_pair(word_list: list[str]) -> dict[str, int]:
     """
-    명사 리스트를 (명사, 빈도수) 리스트로 변환
+    명사 리스트를 {명사: 빈도수, ...}로 변환
     ex. get_word_count_pair_list(['apple', 'apple']) == {'apple': 2} 
     """
     word_list = sorted(word_list)
@@ -123,7 +123,7 @@ def get_comments() -> list[dict[str, int]]:
             noun_list += ret
 
         # 댓글을 {단어: 빈도수}로 만들기
-        parsed = get_word_count_pair_list(noun_list)
+        parsed = get_word_count_pair(noun_list)
         result.append(parsed)
 
     return result
