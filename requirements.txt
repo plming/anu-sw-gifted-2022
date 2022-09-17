@@ -1,0 +1,9 @@
+# style guide
+pylint
+autopep8
+
+# TODO: jupyter notebook 실행에 필요한 패키지 작성
+# ipykernel==6.15.2
+# ipython==8.5.0
+# jupyter-core==4.11.1
+# jupyter_client==7.3.5
