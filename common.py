@@ -5,7 +5,7 @@ def load_polar_scores() -> Dict[str, int]:
     """
     극성점수 불러오기
     """
-    polar_scores = Dict[str, int]()
+    polar_scores = dict()
     with open('dicty.txt', 'r', encoding='utf-8') as file:
         lines = file.readlines()
         for line in lines:
@@ -21,7 +21,7 @@ def get_word_count_pair(word_list: List[str]) -> Dict[str, int]:
     ex. get_word_count_pair_list(['apple', 'apple']) == {'apple': 2} 
     """
     word_list = sorted(word_list)
-    result = Dict[str, int]()
+    result = dict()
     start = 0
     end = 0
     while start < len(word_list):
@@ -67,7 +67,7 @@ def load_nouns() -> Set[str]:
     """
     명사 집합 불러오기
     """
-    noun = Set[str]()
+    noun = set()
     with open('noun.txt', 'r', encoding='utf-8') as file:
         lines = file.readlines()
         for line in lines:
@@ -79,7 +79,7 @@ def load_postpositions() -> Set[str]:
     """
     조사 집합 불러오기
     """
-    postpositions = Set[str]()
+    postpositions = set()
     with open('postPosition.txt', 'r', encoding='utf-8') as file:
         lines = file.readlines()
         for line in lines:
@@ -91,7 +91,7 @@ def load_haday() -> Set[str]:
     """
     하다 용언 집합 불러오기
     """
-    haday = Set[str]()
+    haday = set()
     with open('joyolist.txt', 'r', encoding='utf-8') as file:
         lines = file.readlines()
         for line in lines:
@@ -103,7 +103,7 @@ def get_comments() -> List[Dict[str, int]]:
     with open('news.csv', 'r', encoding='utf-8') as file:
         comments = file.readlines()
 
-    result = List[Dict[str, int]]()
+    result = list()
     nouns = load_nouns()
     for comment in comments:
         # 댓글을 어절로 분리
