@@ -5,12 +5,19 @@ def load_polar_scores() -> Dict[str, int]:
     """
     극성점수 불러오기
     """
+    WORST_SCORE = 1
+    BEST_SCORE = 5
+
     polar_scores: Dict[str, int] = dict()
     with open('dicty.txt', 'r', encoding='utf-8') as file:
         lines = file.readlines()
         for line in lines:
             word, score = line.strip('.\n').split(',')
+            assert word not in polar_scores, f"중복된 단어: {word}"
+
             polar_scores[word] = int(score)
+            assert polar_scores[word] >= WORST_SCORE \
+                and polar_scores[word] <= BEST_SCORE, f"점수가 범위를 벗어남: {word}"
 
     return polar_scores
 
