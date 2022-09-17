@@ -1,9 +1,11 @@
-def load_polar_scores() -> dict[str, int]:
+from typing import Dict, List, Set
+
+
+def load_polar_scores() -> Dict[str, int]:
     """
     극성점수 불러오기
-    ex. { '의기': 4, '영웅': 5, ...}
     """
-    polar_scores = dict[str, int]()
+    polar_scores = Dict[str, int]()
     with open('dicty.txt', 'r', encoding='utf-8') as file:
         lines = file.readlines()
         for line in lines:
@@ -13,13 +15,13 @@ def load_polar_scores() -> dict[str, int]:
     return polar_scores
 
 
-def get_word_count_pair(word_list: list[str]) -> dict[str, int]:
+def get_word_count_pair(word_list: List[str]) -> Dict[str, int]:
     """
     명사 리스트를 {명사: 빈도수, ...}로 변환
     ex. get_word_count_pair_list(['apple', 'apple']) == {'apple': 2} 
     """
     word_list = sorted(word_list)
-    result = dict[str, int]()
+    result = Dict[str, int]()
     start = 0
     end = 0
     while start < len(word_list):
@@ -30,7 +32,7 @@ def get_word_count_pair(word_list: list[str]) -> dict[str, int]:
     return result
 
 
-def combi2(word: str) -> list[str]:
+def combi2(word: str) -> List[str]:
     """
     * 어절을 2개의 요소(명사+하다용언, 명사+명사, 명사+조사)로 분리하여 명사 추출
     * 분리가 가능한 경우, 명사들을 리스트에 담아 반환
@@ -47,7 +49,7 @@ def combi2(word: str) -> list[str]:
     return []
 
 
-def combi3(word: str) -> list[str]:
+def combi3(word: str) -> List[str]:
     """
     * 어절을 3개의 요소(명사+명사+조사)로 분리하여 명사 추출
     * 분리가 가능한 경우, 명사들을 리스트에 담아 반환
@@ -61,11 +63,11 @@ def combi3(word: str) -> list[str]:
     return []
 
 
-def load_nouns() -> set[str]:
+def load_nouns() -> Set[str]:
     """
     명사 집합 불러오기
     """
-    noun = set[str]()
+    noun = Set[str]()
     with open('noun.txt', 'r', encoding='utf-8') as file:
         lines = file.readlines()
         for line in lines:
@@ -73,11 +75,11 @@ def load_nouns() -> set[str]:
     return noun
 
 
-def load_postpositions() -> set[str]:
+def load_postpositions() -> Set[str]:
     """
     조사 집합 불러오기
     """
-    postpositions = set[str]()
+    postpositions = Set[str]()
     with open('postPosition.txt', 'r', encoding='utf-8') as file:
         lines = file.readlines()
         for line in lines:
@@ -85,11 +87,11 @@ def load_postpositions() -> set[str]:
     return postpositions
 
 
-def load_haday() -> set[str]:
+def load_haday() -> Set[str]:
     """
     하다 용언 집합 불러오기
     """
-    haday = set[str]()
+    haday = Set[str]()
     with open('joyolist.txt', 'r', encoding='utf-8') as file:
         lines = file.readlines()
         for line in lines:
@@ -97,18 +99,18 @@ def load_haday() -> set[str]:
     return haday
 
 
-def get_comments() -> list[dict[str, int]]:
+def get_comments() -> List[Dict[str, int]]:
     with open('news.csv', 'r', encoding='utf-8') as file:
         comments = file.readlines()
 
-    result = list[dict[str, int]]()
+    result = List[Dict[str, int]]()
     nouns = load_nouns()
     for comment in comments:
         # 댓글을 어절로 분리
         word_list = comment.split(' ')
 
         # 어절에서 명사 분리
-        noun_list = list[str]()
+        noun_list = List[str]()
         for word in word_list:
             if word in nouns:
                 noun_list.append(word)
