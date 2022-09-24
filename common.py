@@ -4,7 +4,7 @@ import csv
 
 def read_from_csv(file_name: str) -> List[Tuple[str, str]]:
     """
-    csv 파일에서 댓글, 레이블을 가져옵니다.
+    csv 파일에서 레이블, 댓글을 가져옵니다.
     """
     result: List[Tuple[str, str]] = []
 
@@ -14,7 +14,7 @@ def read_from_csv(file_name: str) -> List[Tuple[str, str]]:
             assert len(row) == 2, '컬럼 갯수가 맞지 않습니다'
             assert row[0] in ['P', 'N'], '레이블은 P 또는 N이여야만 합니다'
             result.append((row[0], row[1]))
-            
+
     return result
 
 
@@ -123,8 +123,8 @@ def load_haday() -> Set[str]:
     return haday
 
 
-def get_comments() -> List[Dict[str, int]]:
-    with open('news.csv', 'r', encoding='utf-8') as file:
+def get_comments(path: str) -> List[Dict[str, int]]:
+    with open(path, 'r', encoding='utf-8') as file:
         comments = file.readlines()
 
     result: List[Dict[str, int]] = list()
@@ -134,7 +134,7 @@ def get_comments() -> List[Dict[str, int]]:
         word_list = comment.split(' ')
 
         # 어절에서 명사 분리
-        noun_list = List[str]()
+        noun_list: List[str] = []
         for word in word_list:
             if word in nouns:
                 noun_list.append(word)
