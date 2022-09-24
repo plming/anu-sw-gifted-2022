@@ -89,7 +89,7 @@ file = open('news.csv', 'r', encoding='utf-8')
 comments = file.readlines()
 
 
-new_comment = input("댓글을 입력하세요: ")
+cc
 
 start = time()
 
