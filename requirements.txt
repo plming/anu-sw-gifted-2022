@@ -4,3 +4,6 @@ jupyter
 # style guide
 pylint
 autopep8
+
+# only for naver_news.py script
+selenium
