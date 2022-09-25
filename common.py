@@ -12,7 +12,7 @@ def read_from_csv(file_name: str) -> List[Tuple[str, str]]:
         rows = csv.reader(csv_file)
         for row in rows:
             assert len(row) == 2, '컬럼 갯수가 맞지 않습니다'
-            assert row[0] in ['P', 'N'], '레이블은 P 또는 N이여야만 합니다'
+            assert row[0] in ('P', 'N'), '레이블은 P 또는 N이여야만 합니다'
             result.append((row[0], row[1]))
 
     return result
