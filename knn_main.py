@@ -28,10 +28,11 @@ def get_distance(x: Dict[str, int], y: Dict[str, int], max_frequency: Dict[str, 
 
     DEFAULT_VAL = 0
     for word in all_words:
-        # TODO: 분모가 0일 경우 기본값이 1인가?
         dividend = x.get(word, DEFAULT_VAL) - y.get(word, DEFAULT_VAL)
         divisor = max_frequency.get(word, DEFAULT_VAL) \
             - min_frequency.get(word, DEFAULT_VAL)
+
+        # TODO: 분모가 0인 경우에 대한 예외 처리
         divisor = 1 if divisor == 0 else divisor
 
         sum_term += (dividend / divisor) ** 2
@@ -77,7 +78,7 @@ test_data = common.read_from_csv("test.csv")
 
 LABEL_COLUMN_INDICE = 0
 TEXT_COLUMN_INDICE = 1
-num_matched = 0
+matched_count = 0
 for test in test_data:
     # 훈련 데이터와의 거리-인덱스 쌍을 담는 리스트
     distance_index_pairs: List[Tuple[float, int]] = []
@@ -95,20 +96,19 @@ for test in test_data:
     distance_index_pairs.sort()
 
     # 가장 가까운 댓글들을 찾아 레이블 예측하기
-    NUM_NEAREST_NEIGHBORS = 3
+    K = 3
     num_positive_comments = 0
-    for i in range(NUM_NEAREST_NEIGHBORS):
+    for i in range(K):
         distance, index = distance_index_pairs[i]
         if train_data[index][LABEL_COLUMN_INDICE] == "P":
             num_positive_comments += 1
 
-    if num_positive_comments > NUM_NEAREST_NEIGHBORS // 2:
-        predict = "P"
-    else:
-        predict = "N"
+    predict = "P" if num_positive_comments > K // 2 else "N"
 
     # 레이블이 실제와 예측하는지 확인
     if predict == test[LABEL_COLUMN_INDICE]:
-        num_matched += 1
+        matched_count += 1
+    else:
+        print(f"틀린 예측: {predict} - {test}")
 
-print(f"정확도(%): {num_matched / len(test_data) * 100}")
+print(f"정확도(%): {matched_count / len(test_data) * 100}")
