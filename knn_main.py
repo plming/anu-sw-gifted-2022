@@ -26,11 +26,11 @@ def get_distance(x: Dict[str, int], y: Dict[str, int], max_frequency: Dict[str, 
 
     all_words = set(x.keys()).union(y.keys())
 
-    DEFAULT_VAL = 0
+    DEFAULT_VALUE = 0
     for word in all_words:
-        dividend = x.get(word, DEFAULT_VAL) - y.get(word, DEFAULT_VAL)
-        divisor = max_frequency.get(word, DEFAULT_VAL) \
-            - min_frequency.get(word, DEFAULT_VAL)
+        dividend = x.get(word, DEFAULT_VALUE) - y.get(word, DEFAULT_VALUE)
+        divisor = max_frequency.get(word, DEFAULT_VALUE) \
+            - min_frequency.get(word, DEFAULT_VALUE)
 
         # TODO: 분모가 0인 경우에 대한 예외 처리
         divisor = 1 if divisor == 0 else divisor
