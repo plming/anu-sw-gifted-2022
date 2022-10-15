@@ -96,7 +96,7 @@ for test in test_data:
     distance_index_pairs.sort()
 
     # 가장 가까운 댓글들을 찾아 레이블 예측하기
-    K = 3
+    K = 2
     num_positive_comments = 0
     for i in range(K):
         distance, index = distance_index_pairs[i]
